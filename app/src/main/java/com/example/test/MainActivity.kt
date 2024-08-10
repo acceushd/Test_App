@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var countDownTextView: TextView
     private lateinit var pauseImageView: ImageView
     private lateinit var countDownTimer: CountDownTimer
+    private lateinit var quotes: TextView
     private val pauseDurationMillis = 3 * 60 * 1000L
     private lateinit var cameraButton: FloatingActionButton
     private var latestTmpUri: Uri? = null
@@ -85,6 +86,11 @@ class MainActivity : AppCompatActivity() {
         pauseImageView = findViewById(R.id.pauseImage)
         val targetHours =
             listOf("00:12", "00:30", "02:00", "02:30", "03:27", "03:40", "04:45", "05:00")
+        lifecycleScope.launch {
+            val quote = getQuote()
+            quotes = findViewById(R.id.qoutes)
+            quotes.text = quote
+        }
         startCountDown(targetHours)
         cameraButton = findViewById(R.id.cameraButton)
         picture = findViewById(R.id.picture)
@@ -164,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun rotateImage(source: Bitmap, angle: Float): Bitmap? {
+    private fun rotateImage(source: Bitmap, angle:Float = 90f): Bitmap {
         val matrix = Matrix()
         matrix.postRotate(angle)
         return Bitmap.createBitmap(
@@ -219,7 +225,9 @@ class MainActivity : AppCompatActivity() {
                 val timeStamp =
                     SimpleDateFormat(
                         "yyyyMMdd_HHmmss",
-                        Locale.getDefault()).format(Date()
+                        Locale.getDefault()
+                    ).format(
+                        Date()
                     )
                 val storageDir = File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
@@ -234,10 +242,10 @@ class MainActivity : AppCompatActivity() {
                 )
 
                 // Rotate the bitmap by 90 degrees
-                val rotatedBitmap = rotateImage(bitmap, 90f)
+                val rotatedBitmap = rotateImage(bitmap)
 
                 val outputStream = FileOutputStream(outputFile)
-                rotatedBitmap?.compress(
+                rotatedBitmap.compress(
                     Bitmap.CompressFormat.JPEG,
                     100,
                     outputStream
@@ -267,7 +275,11 @@ class MainActivity : AppCompatActivity() {
                     takeImage()
                 } else {
                     // Handle permission denied
-                    Toast.makeText(this, "Camera permission is required to take photos.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Camera permission is required to take photos.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -275,7 +287,11 @@ class MainActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     showImageSourceChooserDialog()
                 } else {
-                    Toast.makeText(this, "Media permission is required to select photos.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Media permission is required to select photos.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -284,6 +300,5 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_CODE_CAMERA_PERMISSION = 100
         private const val REQUEST_CODE_READ_MEDIA_IMAGES_PERMISSION = 101
-        private const val REQUEST_CODE_PICK_IMAGES = 102
     }
 }

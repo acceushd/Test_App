@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Bis Pause</string>
-    <string name="pause_picture">Picture of the word Pause</string>
-    <string name="camera_picture">Picture of an Camera</string>
     <string name="picture_viewer">Latest picture in App Gallery</string>
+    <string name="Qoutes" translatable="false">Qoutes</string>
+    <string name="pause_picture">Picture of the word Pause</string>
 </resources>

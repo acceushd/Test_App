@@ -10,6 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.example.test"
         minSdk = 34
+        //noinspection OldTargetApi
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -37,6 +38,7 @@ android {
 
 dependencies {
 
+    implementation(libs.okhttp)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
