@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     findViewById<TextView?>(R.id.qoutes).text = quote
                 }
-                delay(20000)
+                delay(5000)
             }
         }
         startCountDown(targetHours)
