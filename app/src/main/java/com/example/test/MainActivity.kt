@@ -25,6 +25,8 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -87,9 +89,13 @@ class MainActivity : AppCompatActivity() {
         val targetHours =
             listOf("00:12", "00:30", "02:00", "02:30", "03:27", "03:40", "04:45", "05:00")
         lifecycleScope.launch {
-            val quote = getQuote()
-            quotes = findViewById(R.id.qoutes)
-            quotes.text = quote
+            while (isActive) {
+                val quote = getQuote()
+                withContext(Dispatchers.Main) {
+                    findViewById<TextView?>(R.id.qoutes).text = quote
+                }
+                delay(20000)
+            }
         }
         startCountDown(targetHours)
         cameraButton = findViewById(R.id.cameraButton)
@@ -170,7 +176,7 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun rotateImage(source: Bitmap, angle:Float = 90f): Bitmap {
+    private fun rotateImage(source: Bitmap, angle: Float = 90f): Bitmap {
         val matrix = Matrix()
         matrix.postRotate(angle)
         return Bitmap.createBitmap(

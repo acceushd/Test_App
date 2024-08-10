@@ -42,5 +42,5 @@ private suspend fun fetchRandomQuote(): JSONObject? {
 
 suspend fun getQuote(): String {
     val json = fetchRandomQuote()
-    return json?.getString("quote")+ " "+ json?.getString("id")
+    return json!!.getString("quote") + " - " + json.getString("author")
 }
