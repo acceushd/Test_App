@@ -3,4 +3,6 @@
     <string name="picture_viewer">Latest picture in App Gallery</string>
     <string name="Qoutes" translatable="false">Qoutes</string>
     <string name="pause_picture">Picture of the word Pause</string>
+    <string name="Marvel_Movie">latest Marvel Movie</string>
+    <string name="Days_until">Days until latest Movie</string>
 </resources>

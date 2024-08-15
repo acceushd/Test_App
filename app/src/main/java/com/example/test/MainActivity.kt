@@ -37,13 +37,14 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
 
     private lateinit var countDownTextView: TextView
-    private lateinit var pauseImageView: ImageView
     private lateinit var countDownTimer: CountDownTimer
-    private lateinit var quotes: TextView
+
+    //private lateinit var quotes: TextView
     private val pauseDurationMillis = 3 * 60 * 1000L
     private lateinit var cameraButton: FloatingActionButton
     private var latestTmpUri: Uri? = null
     private lateinit var picture: ImageView
+    private lateinit var marvelMovieTextView: TextView
 
     private val takePictureLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
@@ -80,12 +81,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         countDownTextView = findViewById(R.id.countDown)
-        pauseImageView = findViewById(R.id.pauseImage)
         val targetHours =
             listOf("00:12", "00:30", "02:00", "02:30", "03:27", "03:40", "04:45", "05:00")
         lifecycleScope.launch {
@@ -103,6 +104,16 @@ class MainActivity : AppCompatActivity() {
         cameraButton.setOnClickListener {
             startCameraIntent()
         }
+        marvelMovieTextView = findViewById(R.id.Marvel)
+        lifecycleScope.launch {
+            val movieTitle = returnMovieName()
+            if (movieTitle != null) {
+                marvelMovieTextView.text = movieTitle
+                findViewById<TextView?>(R.id.DaysUntil).text = String.format("Days until: %s", returnDays())
+            } else {
+                marvelMovieTextView.text = "Funkt net"
+            }
+        }
     }
 
     private fun startCountDown(targetHours: List<String>) {
@@ -115,9 +126,7 @@ class MainActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 if (millisUntilFinished <= pauseDurationMillis) {
                     countDownTextView.text = "Pause" // Show "Pause" for the last 3 minutes
-                    pauseImageView.visibility = ImageView.VISIBLE // Show the pause icon
                 } else {
-                    pauseImageView.visibility = ImageView.GONE // Hide the pause icon
                     val secondsRemaining = (millisUntilFinished / 1000) % 60
                     val minutesRemaining = (millisUntilFinished / (1000 * 60)) % 60
                     val hoursRemaining = (millisUntilFinished / (1000 * 60 * 60))

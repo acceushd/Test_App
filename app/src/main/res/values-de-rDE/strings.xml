@@ -2,4 +2,6 @@
 <resources>
     <string name="picture_viewer">Neustes Bild von den Bildern</string>
     <string name="pause_picture">Bild des wortes Pause</string>
+    <string name="Marvel_Movie">Neuster Marvel Film</string>
+    <string name="Days_until">Tage bis zum nächsten Marvel Film</string>
 </resources>

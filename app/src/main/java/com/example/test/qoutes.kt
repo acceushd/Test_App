@@ -7,7 +7,7 @@ import okhttp3.Request
 import org.json.JSONObject
 
 private suspend fun fetchQuotes(url: String): String? {
-    return withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
         val client = OkHttpClient()
         val request = Request.Builder().url(url).build()
         try {
