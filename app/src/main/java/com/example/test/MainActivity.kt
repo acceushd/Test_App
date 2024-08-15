@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var countDownTextView: TextView
     private lateinit var countDownTimer: CountDownTimer
-
-    //private lateinit var quotes: TextView
     private val pauseDurationMillis = 3 * 60 * 1000L
     private lateinit var cameraButton: FloatingActionButton
     private var latestTmpUri: Uri? = null
