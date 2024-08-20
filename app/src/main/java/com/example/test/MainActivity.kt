@@ -13,6 +13,9 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -43,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     private var latestTmpUri: Uri? = null
     private lateinit var picture: ImageView
     private lateinit var marvelMovieTextView: TextView
+    private lateinit var evenNumber: TextView
 
     private val takePictureLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
@@ -107,11 +111,30 @@ class MainActivity : AppCompatActivity() {
             val movieTitle = returnMovieName()
             if (movieTitle != null) {
                 marvelMovieTextView.text = movieTitle
-                findViewById<TextView?>(R.id.DaysUntil).text = String.format("Days until: %s", returnDays())
+                findViewById<TextView?>(R.id.DaysUntil).text =
+                    String.format("Days until: %s", returnDays())
             } else {
                 marvelMovieTextView.text = "Funkt net"
             }
         }
+        evenNumber = findViewById(R.id.NumberEven)
+        val numberString = findViewById<EditText>(R.id.IsEvenNumber)
+        numberString.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not used in this case
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Not used in this case
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                lifecycleScope.launch {
+                    val number = getNumber(numberString) // Assuming getNumber() extracts the number
+                    evenNumber.text = getEvenOrOdd(number)
+                }
+            }
+        })
     }
 
     private fun startCountDown(targetHours: List<String>) {
@@ -142,6 +165,15 @@ class MainActivity : AppCompatActivity() {
             }
         }.start()
 
+    }
+
+    private fun getNumber(editText: EditText): Int {
+        val numberString = editText.text.toString()
+        return try {
+            numberString.toInt()
+        } catch (e: NumberFormatException) {
+            0
+        }
     }
 
     private fun startCameraIntent() {
