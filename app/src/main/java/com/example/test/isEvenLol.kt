@@ -12,7 +12,7 @@ suspend fun getApi(num: Int): String? {
             .build()
         try {
             val response = client.newCall(request).execute()
-            if(response.isSuccessful) {
+            if (response.isSuccessful) {
                 response.body?.string()
             } else {
                 null
@@ -24,15 +24,16 @@ suspend fun getApi(num: Int): String? {
 }
 
 suspend fun getEvenOrOdd(num: Int): String? {
-    return withContext(Dispatchers.IO){
+    return withContext(Dispatchers.IO) {
         val jsonString = getApi(num)
         if (jsonString != null) {
             val jsonObject = org.json.JSONObject(jsonString)
             val isEven = jsonObject.getBoolean("iseven")
+            val ad = jsonObject.getString("ad")
             if (isEven) {
-                "even"
+                "even\n$ad"
             } else {
-                "odd"
+                "odd\n$ad"
             }
         } else {
             "not work"
