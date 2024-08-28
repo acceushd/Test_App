@@ -22,30 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/cameraButton"
-        android:layout_width="106dp"
-        android:layout_height="80dp"
-        android:layout_margin="16dp"
-        android:contentDescription="@string/pause_picture"
-        android:src="@drawable/camera"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-        android:id="@+id/picture"
-        android:layout_width="162dp"
-        android:layout_height="135dp"
-        android:layout_marginTop="132dp"
-        android:contentDescription="@string/picture_viewer"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/countDown"
-        app:srcCompat="@drawable/camera"
-        tools:ignore="MissingConstraints,VisualLintBounds" />
-
     <TextView
         android:id="@+id/qoutes"
         android:layout_width="wrap_content"
@@ -97,7 +73,8 @@
         app:layout_constraintBottom_toTopOf="@+id/countDown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NumberEven" />
+        app:layout_constraintTop_toBottomOf="@+id/NumberEven"
+        tools:ignore="LabelFor" />
 
     <TextView
         android:id="@+id/NumberEven"
@@ -110,6 +87,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/qoutes"
         app:layout_constraintVertical_bias="0.060000002" />
+
+    <TextView
+        android:id="@+id/ChuckNorris"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="177dp"
+        android:text="@string/Chuck_Norris"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countDown" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
